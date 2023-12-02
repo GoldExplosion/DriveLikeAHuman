@@ -108,5 +108,7 @@ class Scenario:
         for vv in self.vehicles.values():
             if vv.presence:
                 scenario['vehicles'].append(vv.export2json())
-
+        print("===================")
+        print(scenario)
+        print("===================")
         return json.dumps(scenario)

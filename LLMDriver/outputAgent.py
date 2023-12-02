@@ -4,6 +4,7 @@ from rich import print
 import sqlite3
 
 from langchain.chat_models import AzureChatOpenAI
+from langchain.chat_models import ChatOllama
 from langchain.callbacks import get_openai_callback
 from langchain.output_parsers import ResponseSchema
 from langchain.output_parsers import StructuredOutputParser
@@ -43,9 +44,9 @@ class OutputParser:
         input = prompt_template.format_prompt(
             answer=final_results['answer']+final_results['thoughts'])
         with get_openai_callback() as cb:
-            output = self.llm(input.to_messages())
+            output = self.llm(input.to_string())
 
-        self.parseredOutput = self.output_parser.parse(output.content)
+        self.parseredOutput = self.output_parser.parse(output)
         self.dataCommit()
         print("Finish output agent:\n", cb)
         return self.parseredOutput

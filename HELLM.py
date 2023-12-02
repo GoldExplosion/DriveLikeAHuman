@@ -4,6 +4,11 @@ import numpy as np
 import gymnasium as gym
 from gymnasium.wrappers import RecordVideo
 from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
+from Runpod import RunpodServerlessLLM
+import highway_env
+highway_env.register_highway_envs()
+from langchain.callbacks.manager import CallbackManager
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 from scenario.scenario import Scenario
 from LLMDriver.driverAgent import DriverAgent
@@ -39,6 +44,14 @@ elif OPENAI_CONFIG['OPENAI_API_TYPE'] == 'openai':
         model_name='gpt-3.5-turbo-16k-0613', # or any other model with 8k+ context
         max_tokens=1024,
         request_timeout=60
+    )
+
+elif OPENAI_CONFIG['OPENAI_API_TYPE'] == "runpod":
+    os.environ["RUNPOD_Pod_ID"] = OPENAI_CONFIG['RUNPOD_Pod_ID']
+    os.environ["RUNPOD_API_KEY"] = OPENAI_CONFIG['RUNPOD_API_KEY']
+    llm = RunpodServerlessLLM(
+        base_url="https://api.runpod.ai/v2/"+OPENAI_CONFIG['RUNPOD_Pod_ID'],
+        model="mistral7B"
     )
 
 

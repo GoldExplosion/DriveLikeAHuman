@@ -1,8 +1,13 @@
-OPENAI_API_TYPE: 'azure' #'azure'  OR 'openai'
+OPENAI_API_TYPE: 'runpod' #'azure'  OR 'openai'
 # for 'openai'
-OPENAI_KEY: 'sk-xxxxxxxxxxx' # your openai key
+OPENAI_KEY: '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' # your openai key
 # for 'azure'
 AZURE_MODEL: 'XXXXX' # your deploment_model_name 
 AZURE_API_BASE: https://xxxxxxxx.openai.azure.com/ # your deployment endpoint
 AZURE_API_KEY: 'xxxxxx' # your deployment key
 AZURE_API_VERSION: '2023-03-15-preview'
+# for 'runpod'
+RUNPOD_baseUrl: 'https://api.runpod.ai/v2/cfv4tc720gsxb5/run'
+RUNPOD_model: 'mistral:7b-instruct-q5_K_S'
+RUNPOD_API_KEY: 'LRGZSNIVQ5ZWRQ5CFJKFDHNZBJOGD2NMNAYYNKFC'
+RUNPOD_Pod_ID: 'cfv4tc720gsxb5'

@@ -68,30 +68,28 @@ class DriverAgent:
         else:
             last_step_action = "Not available"
             last_step_explanation = "Not available"
-        with get_openai_callback() as cb:
-            self.agent.run(
-                f"""
-                You, the 'ego' car, are now driving a car on a highway. You have already drive for {self.sce.frame} seconds.
-                The decision you made LAST time step was `{last_step_action}`. Your explanation was `{last_step_explanation}`. 
-                Here is the current scenario: \n ```json\n{self.sce.export2json()}\n```\n. 
-                Please make decision for the `ego` car. You have to describe the state of the `ego`, then analyze the possible actions, and finally output your decision. 
+        self.agent.run(
+            f"""
+            You, the 'ego' car, are now driving a car on a highway. You have already drive for {self.sce.frame} seconds.
+            The decision you made LAST time step was `{last_step_action}`. Your explanation was `{last_step_explanation}`. 
+            Here is the current scenario: \n ```json\n{self.sce.export2json()}\n```\n. 
+            Please make decision for the `ego` car. You have to describe the state of the `ego`, then analyze the possible actions, and finally output your decision. 
 
-                There are several rules you need to follow when you drive on a highway:
-                {TRAFFIC_RULES}
+            There are several rules you need to follow when you drive on a highway:
+            {TRAFFIC_RULES}
 
-                Here are your attentions points:
-                {DECISION_CAUTIONS}
-                
-                Let's think step by step. Once you made a final decision, output it in the following format: \n
-                ```
-                Final Answer: 
-                    "decision":{{"ego car's decision, ONE of the available actions"}},
-                    "expalanations":{{"your explaination about your decision, described your suggestions to the driver"}}
-                ``` \n
-                """,
-                callbacks=[self.ch]
-            )
-        print(cb)
+            Here are your attentions points:
+            {DECISION_CAUTIONS}
+            
+            Let's think step by step. Once you made a final decision, output it in the following format: \n
+            ```
+            Final Answer: 
+                "decision":{{"ego car's decision, ONE of the available actions"}},
+                "expalanations":{{"your explaination about your decision, described your suggestions to the driver"}}
+            ``` \n
+            """,
+            callbacks=[self.ch]
+        )
         print('[cyan]Final decision:[/cyan]')
         print(self.ch.memory[-1])
         self.dataCommit()
